@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import pe.edu.upc.superherocompose.common.Resource
 import pe.edu.upc.superherocompose.data.repository.HeroRepository
+import pe.edu.upc.superherocompose.domain.Hero
 
 class HeroListViewModel(private val heroRepository: HeroRepository) : ViewModel() {
 
@@ -20,6 +21,12 @@ class HeroListViewModel(private val heroRepository: HeroRepository) : ViewModel(
         _name.value = name
     }
 
+    fun onToggleFavorite(hero: Hero) {
+        hero.isFavorite = !hero.isFavorite
+       _state.value = HeroListState(heroes = emptyList())
+
+    }
+
     fun searchHero() {
         _state.value = HeroListState(isLoading = true)
         viewModelScope.launch {
@@ -28,7 +35,7 @@ class HeroListViewModel(private val heroRepository: HeroRepository) : ViewModel(
             if (result is Resource.Success) {
                 _state.value = HeroListState(heroes = result.data)
             } else {
-                _state.value = HeroListState(error = result.message?:"An error occurred")
+                _state.value = HeroListState(error = result.message ?: "An error occurred")
             }
 
         }
