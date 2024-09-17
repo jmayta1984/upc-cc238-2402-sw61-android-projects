@@ -23,7 +23,9 @@ class HeroListViewModel(private val heroRepository: HeroRepository) : ViewModel(
 
     fun onToggleFavorite(hero: Hero) {
         hero.isFavorite = !hero.isFavorite
-       _state.value = HeroListState(heroes = emptyList())
+        val heroes = _state.value.heroes ?: emptyList()
+        _state.value = HeroListState(heroes = emptyList())
+        _state.value = HeroListState(heroes = heroes)
 
     }
 
