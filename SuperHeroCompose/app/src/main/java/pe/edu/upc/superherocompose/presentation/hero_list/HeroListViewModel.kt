@@ -23,11 +23,22 @@ class HeroListViewModel(private val heroRepository: HeroRepository) : ViewModel(
 
     fun onToggleFavorite(hero: Hero) {
         hero.isFavorite = !hero.isFavorite
-        val heroes = _state.value.heroes ?: emptyList()
-        _state.value = HeroListState(heroes = emptyList())
-        _state.value = HeroListState(heroes = heroes)
+        viewModelScope.launch {
+            if (hero.isFavorite) {
+                heroRepository.insertHero(hero.id, hero.name, hero.fullName, hero.url)
+            } else {
+                heroRepository.deleteHero(hero.id, hero.name, hero.fullName, hero.url)
+            }
+
+            val heroes = _state.value.heroes ?: emptyList()
+            _state.value = HeroListState(heroes = emptyList())
+            _state.value = HeroListState(heroes = heroes)
+
+
+        }
 
     }
+
 
     fun searchHero() {
         _state.value = HeroListState(isLoading = true)

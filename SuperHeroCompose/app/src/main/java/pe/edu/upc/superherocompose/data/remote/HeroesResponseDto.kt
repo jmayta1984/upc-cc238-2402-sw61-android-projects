@@ -27,5 +27,5 @@ data class Poster(
 )
 
 fun HeroDto.toHero(): Hero {
-    return Hero(name, biography.fullName, image.url)
+    return Hero(id, name, biography.fullName, image.url)
 }
