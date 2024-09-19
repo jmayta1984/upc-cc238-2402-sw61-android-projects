@@ -8,7 +8,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.room.Room
 import pe.edu.upc.jokescompose.common.Constants
+import pe.edu.upc.jokescompose.data.local.AppDatabase
 import pe.edu.upc.jokescompose.data.repository.JokeRepository
 import pe.edu.upc.jokescompose.data.remote.JokeService
 import pe.edu.upc.jokescompose.presentation.JokeScreen
@@ -27,7 +29,12 @@ class MainActivity : ComponentActivity() {
             .build()
             .create(JokeService::class.java)
 
-        val viewModel = JokeViewModel(JokeRepository(service))
+        val dao = Room
+            .databaseBuilder(applicationContext, AppDatabase::class.java, "jokes-db")
+            .build()
+            .getJokeDao()
+
+        val viewModel = JokeViewModel(JokeRepository(service, dao))
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
