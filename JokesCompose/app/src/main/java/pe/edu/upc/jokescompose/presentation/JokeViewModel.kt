@@ -22,6 +22,24 @@ class JokeViewModel(private val repository: JokeRepository) : ViewModel() {
                         if (score == joke.score) 0 else score
                     )
                 )
+            val previousScore = joke.score
+
+            viewModelScope.launch {
+                if (previousScore == 0) {
+                    repository.insertJoke(joke)
+                    return@launch
+                }
+                if (score == previousScore) {
+                    repository.deleteJoke(joke)
+                    return@launch
+                }
+                if (previousScore > 0) {
+                    repository.updateJoke(joke)
+                    return@launch
+                }
+
+            }
+
         }
     }
 
