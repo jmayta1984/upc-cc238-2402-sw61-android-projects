@@ -45,4 +45,19 @@ class JokeRepository(
         return@withContext Resource.Error(message = response.message())
 
     }
+
+    suspend fun getJokes(): Resource<List<Joke>> = withContext(Dispatchers.IO) {
+
+        try {
+            val entities = dao.fetchAll()
+            val jokes = entities.map { jokeEntity: JokeEntity ->
+                Joke(jokeEntity.description, jokeEntity.score)
+            }.toList()
+            return@withContext Resource.Success(jokes)
+        } catch (exception: Exception) {
+            return@withContext Resource.Error(exception.message ?: "An error occurred")
+
+        }
+
+    }
 }
