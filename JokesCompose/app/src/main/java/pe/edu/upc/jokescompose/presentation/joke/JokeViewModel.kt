@@ -1,4 +1,4 @@
-package pe.edu.upc.jokescompose.presentation
+package pe.edu.upc.jokescompose.presentation.joke
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -26,7 +26,7 @@ class JokeViewModel(private val repository: JokeRepository) : ViewModel() {
 
             viewModelScope.launch {
                 if (previousScore == 0) {
-                    repository.insertJoke(joke)
+                    repository.insertJoke(Joke(joke.description, score))
                     return@launch
                 }
                 if (score == previousScore) {
