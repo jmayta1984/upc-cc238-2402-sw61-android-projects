@@ -13,14 +13,27 @@ class JokeViewModel(private val repository: JokeRepository) : ViewModel() {
     private val _state = mutableStateOf(JokeState())
     val state: State<JokeState> get() = _state
 
-    fun getJoke(){
+    fun onScoreChanged(score: Int) {
+        _state.value.joke?.let { joke: Joke ->
+            _state.value =
+                JokeState(
+                    joke = Joke(
+                        joke.description,
+                        if (score == joke.score) 0 else score
+                    )
+                )
+        }
+    }
+
+
+    fun getJoke() {
         _state.value = JokeState(isLoading = true)
         viewModelScope.launch {
             val result = repository.getJoke()
             if (result is Resource.Success) {
                 _state.value = JokeState(joke = result.data)
             } else {
-                _state.value = JokeState(message = result.message?:"An error occurred")
+                _state.value = JokeState(message = result.message ?: "An error occurred")
             }
 
         }
