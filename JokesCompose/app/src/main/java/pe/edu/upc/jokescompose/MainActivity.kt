@@ -10,11 +10,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.room.Room
 import pe.edu.upc.jokescompose.common.Constants
-import pe.edu.upc.jokescompose.data.local.AppDatabase
+import pe.edu.upc.jokescompose.core.AppDatabase
 import pe.edu.upc.jokescompose.data.repository.JokeRepository
 import pe.edu.upc.jokescompose.data.remote.JokeService
-import pe.edu.upc.jokescompose.presentation.joke.JokeScreen
-import pe.edu.upc.jokescompose.presentation.joke.JokeViewModel
 import pe.edu.upc.jokescompose.presentation.jokelist.JokeListScreen
 import pe.edu.upc.jokescompose.presentation.jokelist.JokeListViewModel
 import pe.edu.upc.jokescompose.ui.theme.JokesComposeTheme
