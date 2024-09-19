@@ -13,8 +13,10 @@ import pe.edu.upc.jokescompose.common.Constants
 import pe.edu.upc.jokescompose.data.local.AppDatabase
 import pe.edu.upc.jokescompose.data.repository.JokeRepository
 import pe.edu.upc.jokescompose.data.remote.JokeService
-import pe.edu.upc.jokescompose.presentation.JokeScreen
-import pe.edu.upc.jokescompose.presentation.JokeViewModel
+import pe.edu.upc.jokescompose.presentation.joke.JokeScreen
+import pe.edu.upc.jokescompose.presentation.joke.JokeViewModel
+import pe.edu.upc.jokescompose.presentation.jokelist.JokeListScreen
+import pe.edu.upc.jokescompose.presentation.jokelist.JokeListViewModel
 import pe.edu.upc.jokescompose.ui.theme.JokesComposeTheme
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -34,12 +36,14 @@ class MainActivity : ComponentActivity() {
             .build()
             .getJokeDao()
 
-        val viewModel = JokeViewModel(JokeRepository(service, dao))
+        val viewModel = JokeListViewModel(JokeRepository(service, dao))
+
+
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             JokesComposeTheme {
-                JokeScreen(viewModel)
+                JokeListScreen(viewModel)
             }
         }
     }
