@@ -24,7 +24,10 @@ fun JokeScreen(viewModel: JokeViewModel) {
     val state = viewModel.state.value
 
     Scaffold { paddingValues ->
-        Column(modifier = Modifier.padding(paddingValues)) {
+        Column(
+            modifier = Modifier.fillMaxWidth().padding(paddingValues),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             OutlinedButton(onClick = {
                 viewModel.getJoke()
             }) {

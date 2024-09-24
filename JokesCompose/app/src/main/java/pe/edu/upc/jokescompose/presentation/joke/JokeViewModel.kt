@@ -34,7 +34,7 @@ class JokeViewModel(private val repository: JokeRepository) : ViewModel() {
                     return@launch
                 }
                 if (previousScore > 0) {
-                    repository.updateJoke(joke)
+                    repository.updateJoke(Joke(joke.description, score))
                     return@launch
                 }
 
