@@ -1,34 +1,39 @@
 package pe.edu.upc.appturismo.presentation
 
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Done
-import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.glide.GlideImage
 import pe.edu.upc.appturismo.common.Constants
@@ -118,10 +123,11 @@ fun PackageListScreen(viewModel: PackageListViewModel) {
                     items(packages) {
                         Card(modifier = Modifier.padding(4.dp)) {
                             Column {
-                                Box {
+                                Box(modifier = Modifier.fillMaxWidth()) {
                                     GlideImage(
-
-                                        modifier = Modifier.height(144.dp),
+                                        modifier = Modifier
+                                            .height(144.dp)
+                                            .clip(RoundedCornerShape(8.dp)),
                                         imageModel = { it.image }, // loading a network image using an URL.
                                         imageOptions = ImageOptions(
                                             contentScale = ContentScale.Crop,
@@ -134,16 +140,21 @@ fun PackageListScreen(viewModel: PackageListViewModel) {
                                             .padding(2.dp)
                                     ) {
                                         Icon(
-                                            imageVector = Icons.Filled.Favorite,
+                                            imageVector = Icons.Filled.FavoriteBorder,
                                             contentDescription = "Favorite",
-                                            tint = Color.Gray
+                                            tint = MaterialTheme.colorScheme.onPrimary
                                         )
                                     }
 
 
                                 }
 
-                                Text(modifier = Modifier.padding(4.dp), text = it.name)
+                                Text(
+                                    modifier = Modifier.padding(4.dp),
+                                    text = it.name,
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 20.sp
+                                )
                                 Text(modifier = Modifier.padding(4.dp), text = it.description)
                             }
 
